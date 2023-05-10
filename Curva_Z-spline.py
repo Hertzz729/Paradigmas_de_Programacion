@@ -22,7 +22,7 @@ class Curva:
     #=============
     def __int__(s, x:float=[], dim:int=3):
 
-        s.x = np.array(x,dtyoe=np,float64)
+        s.x = np.array(x,dtyoe=np.float64)
         s.dim = dim
         s.n:np.int32 =  int(len(s.x)/s.dim)
         s.l = []
@@ -116,7 +116,7 @@ class Curva:
             zm1:np.float64 = 0.5*(2.0-am1)*(2.0-am1)*(1.0-am1)
             xi.append(zp1*s.x[ip1]+z*s.x[i]+zp2*s.x[ip2]+zm1*s.x[im1])
             for i in range(1,s.dim):
-                xi.append(zp1*s.x[ip+j*s.n]+z*s.x[i+j*s.n]+2zp*s.x[ip2+j*s.n]+zm1*s.x[im1+j*s.n])
+                xi.append(zp1*s.x[ip+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zm1*s.x[im1+j*s.n])
         #)=======================================UWU===
         # Interpolacion quintica C2
         #=============================================
@@ -154,7 +154,7 @@ class Curva:
             zm2:np.float64 = 18.0+u12*am2*(-459.0+am2*(382.5+am2*(-165.5+am2*(31.5-2.5*am2))))
             xi.append(zp1*s.x[ip1]+z*s.x[i]+zp2*s.x[ip2]+zp3*s.x[ip3]+zm1*s.x[im1]+zm2*s.x[im2])
             for j in range(1,s.dim):
-                xi.append(zp1*s.x[ip1+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zp3*s.x[ip3+j*s.n]+zm1*s.x[im1+j*s.n]+zm2*s.x[1m2+j*s.n])
+                xi.append(zp1*s.x[ip1+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zp3*s.x[ip3+j*s.n]+zm1*s.x[im1+j*s.n]+zm2*s.x[im2+j*s.n])
         else:
             print("La suavidad debe ser 0,1 o 2")
         return xi
@@ -170,14 +170,10 @@ def zspline(puntos, dim, n ,cont):
     curva = Curva(puntos, dim)
     dx:np.float64 = 1.0/float(n)
     x= np.zeros(n,dtype=np.float64)
-    y = np.zeros(n,dtype=np,float64)
+    y = np.zeros(n,dtype=np.float64)
 
     for i in range(0,n):
         r:np.float64 = float(i)*dx
         [x[i],y[i]]= curva.interpolacion(cont,r)
 
     return x,y
-
-
-
-
