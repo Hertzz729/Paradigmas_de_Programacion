@@ -20,9 +20,9 @@ class Curva:
     #=============
     # Constructor 
     #=============
-    def __int__(s, x:float=[], dim:int=3):
+    def __init__(s, x:float=[], dim:int=3):
 
-        s.x = np.array(x,dtyoe=np.float64)
+        s.x = np.array(x,dtype=np.float64)
         s.dim = dim
         s.n:np.int32 =  int(len(s.x)/s.dim)
         s.l = []
@@ -39,7 +39,7 @@ class Curva:
         # Formato de datos 
         s.formato = ""
         for i in range(s.dim):
-            s.foramato += "%15.8e"
+            s.formato += "%15.8e"
         s.formato += "\n"
 
         # Tupla de variables a imprimir 
@@ -47,7 +47,7 @@ class Curva:
             s.tup = (s.x[i],)
             for ii in range(1,s.dim):
                 s.tup = s.tup + (s.x[i+ii*s.n],)
-            print(s.format % s.tup)
+            print(s.formato % s.tup)
 
 
     #==========================
@@ -76,7 +76,7 @@ class Curva:
         """
         rdx:np.float64 = 1.0/s.dx
         xi:float = []
-        i:np.int32 = int(s*s.L*rdx)
+        i:np.int32 = int(r*s.L*rdx)
         a:np.float64 = r*s.L*rdx -float(i)  # Distancia normalizada
 
         #=========================
@@ -104,9 +104,6 @@ class Curva:
             im1:np.int32 = i-1
             if i==0:
                 im1=s.n-1
-            imp:np.int32= i+1
-            if i==0:
-                im1=s.n-1
             am1:np.float64 = a+1.0
             ap1:np.float64 = 1.0-a
             ap2:np.float64 = 2.0-a
@@ -115,15 +112,15 @@ class Curva:
             zp2:np.float64 = 0.5*(2.0-ap2)*(2.0-ap2)*(1.0-ap2)
             zm1:np.float64 = 0.5*(2.0-am1)*(2.0-am1)*(1.0-am1)
             xi.append(zp1*s.x[ip1]+z*s.x[i]+zp2*s.x[ip2]+zm1*s.x[im1])
-            for i in range(1,s.dim):
-                xi.append(zp1*s.x[ip+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zm1*s.x[im1+j*s.n])
+            for j in range(1,s.dim):
+                xi.append(zp1*s.x[ip1+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zm1*s.x[im1+j*s.n])
         #)=======================================UWU===
         # Interpolacion quintica C2
         #=============================================
         elif p==2:
             ip1:np.int32 = i+1
             ip2:np.int32 = i+2
-            ip3:np.int32 = i*3
+            ip3:np.int32 = i+3
             if i== s.n-1:
                 ip1 = 0
                 ip2 = 1
@@ -139,7 +136,7 @@ class Curva:
                 im1= s.n-1
                 im2 = s.n-2
             if i == 1:
-                im2= 1
+                im2= s.n-1
             u12:np.float64 = 1.0/12.0
             am1:np.float64 = a+1.0
             am2:np.float64 = a+2.0
@@ -151,10 +148,11 @@ class Curva:
             zp2:np.float64 = -4.0+u12*ap2*(225.0+ap2*(-367.5+ap2*(272.5+ap2*(-94.5+12.5*ap2))))
             zp3:np.float64 = 18.0+u12*ap3*(-459.0+ap3*(382.5+ap3*(-156.5+ap3*(31.5-2.5*ap3))))
             zm1:np.float64 = -4.0+u12*am1*(225.0+am1*(-367.5+am1*(272.5+am1*(-94.5+12.5*am1))))
-            zm2:np.float64 = 18.0+u12*am2*(-459.0+am2*(382.5+am2*(-165.5+am2*(31.5-2.5*am2))))
+            zm2:np.float64 = 18.0+u12*am2*(-459.0+am2*(382.5+am2*(-156.5+am2*(31.5-2.5*am2))))
             xi.append(zp1*s.x[ip1]+z*s.x[i]+zp2*s.x[ip2]+zp3*s.x[ip3]+zm1*s.x[im1]+zm2*s.x[im2])
             for j in range(1,s.dim):
                 xi.append(zp1*s.x[ip1+j*s.n]+z*s.x[i+j*s.n]+zp2*s.x[ip2+j*s.n]+zp3*s.x[ip3+j*s.n]+zm1*s.x[im1+j*s.n]+zm2*s.x[im2+j*s.n])
+
         else:
             print("La suavidad debe ser 0,1 o 2")
         return xi
