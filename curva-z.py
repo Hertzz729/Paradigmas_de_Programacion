@@ -4,8 +4,8 @@
 # Jerson Gallardo ESFM IPN 2023
 #====================================
 import numpy as np
-from Curva import Curva,zspline
-import matplotlib as plit
+from curva import Curva,zspline
+import matplotlib.pyplot as plt
 import math
 
 #=======================
@@ -35,9 +35,9 @@ x3,y3 = zspline(puntos,dim,n,0)
 plt.plot(x3,y3, lw=2,color="orange")
 plt.plot(x2,y2,lw=2,color="red")
 plt.plot(x1,y1,lw=2,color="blue")
-plt.scatter(puntos[0:nump],puntos[nump:2*nump],maker="o", color="black")
+plt.scatter(puntos[0:nump],puntos[nump:2*nump],marker="o", color="black")
 plt.xlabel("Coordenada x")
 plt.ylabel("Coordenada y")
 plt.title("Curva cerrada Z-spline en 2D")
-plt.show()
+plt.show()()
 
