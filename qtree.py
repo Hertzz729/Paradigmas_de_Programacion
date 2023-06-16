@@ -73,35 +73,34 @@ class QTree():
         self.particulas = [Particula(random.uniform(0,10), random.uniform(0,10)) for x in  range(n)]
         self.root= Nodo(0, 0,10, 10, self.particulas)
         
-        def add_particulas(self, x:float, y:float):
-            self.particulas.append(Particula(x,y))
+    def add_particulas(self, x:float, y:float):
+        self.particulas.append(Particula(x,y))
+    
+    def get_particulas(self):
+        return self.particulas
+    
+    def subdividir(self):
+        subdivision_recusiva(self.root,self.umbral)
         
-        def get_particulas(self):
-            return self.particulas
-        
-        def subdividir(self):
-            subdivision_recusiva(self.root,self.umbral)
-            
-        def visualizacion(self):
-            fig = plt.figure(figsize=(12,8))
-            plt.title("Quadtree")
-            c = encontrar_hijos(self.root)
-            print("Numero de segmentos: %d" %len(c))
-            areas= set()
-            for el in c:
-                areas.add(el.ancho*el.ancho)
-            print("Minima area por segmento: %.3f units" %min(areas))
-            for n in c:
-                plt.gcf().gca().add_patch(patches.Rectagle((n.x0, n.y0), n.ancho, n.alto, fill=False))
-                x = [particula.x for particula in self.particulas]
-                y = [particula.y for particula in self.particulas]
-                plt.plot(x,y, "ro") #muestra las particulas como puntos
-                plt.show()
-                return
-            
+    def visualizacion(self):
+        fig = plt.figure(figsize=(12,8))
+        plt.title("Quadtree")
+        c = encontrar_hijos(self.root)
+        print("Numero de segmentos: %d" %len(c))
+        areas= set()
+        for el in c:
+            areas.add(el.ancho*el.ancho)
+        print("Minima area por segmento: %.3f units" %min(areas))
+        for n in c:
+            plt.gcf().gca().add_patch(patches.Rectangle((n.x0, n.y0), n.ancho, n.alto, fill=False))
+            x = [particula.x for particula in self.particulas]
+            y = [particula.y for particula in self.particulas]
+            plt.plot(x,y, "ro") #muestra las particulas como puntos
+            plt.show()
+            return
+
 qtree = QTree(2,200)
 qtree.subdividir()
 qtree.visualizacion()
-
     
     
