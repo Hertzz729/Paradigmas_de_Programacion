@@ -20,12 +20,12 @@ if rank == 0:
     # Matriz vacia de tamaño procesos *n
     # dtype es el tipo de dato (i) es entero
     #=======================================
-
+    recvarray = numpy.empty([size,n],dtype='i')
 #==================================
 # Gather es rapido para numpy
 # enviar datos al proceso root 
 #==================================
-comm:Gather(sendarray, recvarray, root=0)
+comm.Gather(sendarray, recvarray, root=0)
 
 if rank ==0:
     for i in range(size):
