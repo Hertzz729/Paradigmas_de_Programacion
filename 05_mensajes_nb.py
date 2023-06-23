@@ -40,9 +40,9 @@ if __name__ == "__main__":
     # con dimension 10 y tipo de datos
     # float (doble precision)
     #=================================================
-    a = np.zeros(10, dtype=no.float64)
+    a = np.zeros(10, dtype=np.float64)
     req = comm.Irecv(a, source =src)
     req.wait()
     
-    print("Soy el proceso ", rankm ", el resultado es ", a )
+    print("Soy el proceso ", rank, ", el resultado es ", a )
 
