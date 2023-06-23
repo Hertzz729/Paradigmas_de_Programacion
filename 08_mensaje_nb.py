@@ -1,7 +1,7 @@
 from mpi4py import MPI
 import numpy
 
-comm= MPI.COMM_WORDL
+comm= MPI.COMM_WOLRD
 rank = comm.Get_rank()
 
 #=============================================
@@ -19,10 +19,10 @@ if rank ==0:
     #==============================================
     # Envio bloqueante especificado el tipo de dato
     #==============================================
-    comm.Send([data, MPI.INT], dast=1, tag=77)
+    comm.Send([data, MPI.INT], dest=1, tag=77)
 
 elif rank == 1:
-    data = nupy.empty(10, dtype ="i")
+    data = numpy.empty(10, dtype ="i")
     comm.Recv([data, MPI.INT], source=0, tag=77)
     print(data)
 
