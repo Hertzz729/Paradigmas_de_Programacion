@@ -32,5 +32,5 @@ if __name__ == "__main__":
     req = comm.irecv(source=src)
     a = req.wait()
 
-    print()"Soy el proceso ", rank, ", el resultado es ", len(a.x), a.p)
+    print("Soy el proceso ", rank, ", el resultado es ", len(a.x), a.p)
     
