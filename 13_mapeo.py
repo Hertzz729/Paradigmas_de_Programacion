@@ -19,6 +19,11 @@ r = comm.allreduce(r_chunk)
 #===========================================
 # Una matriz con todos los datos
 #===========================================
+rr = comm.allgather(r_chunk)
+
+#===========================================
+# Una matriz con todos los datos
+#===========================================
 rrr = comm.gather(r_chunk, root = 1)
 
 if rank == 0:
